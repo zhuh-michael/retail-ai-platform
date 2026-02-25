@@ -22,6 +22,7 @@ describe('ReplenishmentService', () => {
     itemRepository = {
       create: jest.fn(),
       save: jest.fn(),
+      findOne: jest.fn(),
     };
 
     forecastService = {

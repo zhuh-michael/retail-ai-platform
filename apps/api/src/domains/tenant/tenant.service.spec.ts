@@ -70,8 +70,19 @@ describe('TenantService', () => {
       const input = {
         name: 'Test Tenant',
         code: 'test-tenant',
-        contactInfo: mockTenant.contactInfo,
-        subscription: mockTenant.subscription,
+        contactInfo: {
+          companyName: 'Test Corp',
+          address: 'Test Address',
+          phone: '123456789',
+          email: 'test@example.com',
+          legalPerson: 'Test Person',
+        },
+        subscription: {
+          plan: PlanType.BASIC,
+          startDate: new Date(),
+          endDate: new Date('2027-01-01'),
+          autoRenew: false,
+        },
       };
 
       const result = await service.create(input);
@@ -90,8 +101,19 @@ describe('TenantService', () => {
       const input = {
         name: 'Test Tenant',
         code: 'test-tenant',
-        contactInfo: mockTenant.contactInfo,
-        subscription: mockTenant.subscription,
+        contactInfo: {
+          companyName: 'Test Corp',
+          address: 'Test Address',
+          phone: '123456789',
+          email: 'test@example.com',
+          legalPerson: 'Test Person',
+        },
+        subscription: {
+          plan: PlanType.BASIC,
+          startDate: new Date(),
+          endDate: new Date('2027-01-01'),
+          autoRenew: false,
+        },
       };
 
       await expect(service.create(input)).rejects.toThrow(ConflictException);
@@ -101,8 +123,19 @@ describe('TenantService', () => {
       const input = {
         name: 'Test Tenant',
         code: 't',
-        contactInfo: mockTenant.contactInfo,
-        subscription: mockTenant.subscription,
+        contactInfo: {
+          companyName: 'Test Corp',
+          address: 'Test Address',
+          phone: '123456789',
+          email: 'test@example.com',
+          legalPerson: 'Test Person',
+        },
+        subscription: {
+          plan: PlanType.BASIC,
+          startDate: new Date(),
+          endDate: new Date('2027-01-01'),
+          autoRenew: false,
+        },
       };
 
       await expect(service.create(input)).rejects.toThrow(BadRequestException);
@@ -128,7 +161,7 @@ describe('TenantService', () => {
     });
   });
 
-  describe('canCreateUser', () => {
+  describe('checkQuota', () => {
     it('应该返回 true 当配额充足', async () => {
       repository.findOne.mockResolvedValue(mockTenant);
 

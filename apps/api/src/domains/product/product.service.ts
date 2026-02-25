@@ -61,11 +61,11 @@ export class ProductService {
     }
 
     // 搭配方案 2: 商务场合搭配
-    if (occasion === 'BUSINESS' || baseProduct.styleTags.occasions.includes('BUSINESS')) {
+    if (occasion === MatchOccasion.BUSINESS || baseProduct.styleTags.occasions.includes(MatchOccasion.BUSINESS)) {
       const businessMatch = await this.findMatchingProducts(
         tenantId,
         baseProduct,
-        ['BUSINESS'],
+        [MatchOccasion.BUSINESS],
         '商务场合搭配',
       );
       if (businessMatch) {

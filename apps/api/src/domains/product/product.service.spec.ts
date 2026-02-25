@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ProductService } from './product.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Product } from './entities/product.entity';
+import { Product, MatchOccasion } from './entities/product.entity';
 import { NotFoundException } from '@nestjs/common';
 
 describe('ProductService', () => {
@@ -20,7 +20,7 @@ describe('ProductService', () => {
       colors: ['白色', '黑色'],
       patterns: ['纯色'],
       seasons: ['春', '秋'],
-      occasions: ['BUSINESS', 'DAILY'],
+      occasions: [MatchOccasion.BUSINESS, MatchOccasion.DAILY],
     },
     price: 899,
     stockQuantity: 50,

@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MemberService } from './member.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Member, MemberLevel } from './entities/member.entity';
+import { Member, MemberLevel, StylePreference } from './entities/member.entity';
 import { NotFoundException, BadRequestException } from '@nestjs/common';
 
 describe('MemberService', () => {
@@ -18,7 +18,7 @@ describe('MemberService', () => {
     points: 2580,
     birthday: new Date('1990-03-15'),
     stylePreferences: {
-      styles: ['ELEGANT', 'BUSINESS'],
+      styles: [StylePreference.ELEGANT, StylePreference.BUSINESS],
       colors: ['黑色', '白色'],
       sizes: { top: 'M', bottom: 'L' },
     },
