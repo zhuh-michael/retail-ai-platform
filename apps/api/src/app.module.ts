@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TenantModule } from './domains/tenant/tenant.module';
 import { AuthModule } from './domains/auth/auth.module';
 import { ReplenishmentModule } from './domains/replenishment/replenishment.module';
+import { MemberModule } from './domains/member/member.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { ReplenishmentModule } from './domains/replenishment/replenishment.modul
     TenantModule,
     AuthModule,
     ReplenishmentModule,
+    MemberModule,
   ],
 })
 export class AppModule {}

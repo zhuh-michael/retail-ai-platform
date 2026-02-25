@@ -4,6 +4,8 @@ CREATE TYPE plan_type AS ENUM ('BASIC', 'STANDARD', 'ENTERPRISE');
 CREATE TYPE user_status AS ENUM ('ACTIVE', 'INACTIVE', 'SUSPENDED');
 CREATE TYPE plan_status AS ENUM ('DRAFT', 'PENDING', 'CONFIRMED', 'SUBMITTED', 'COMPLETED', 'CANCELLED');
 CREATE TYPE item_status AS ENUM ('PENDING', 'ADJUSTED', 'CONFIRMED');
+CREATE TYPE member_level AS ENUM ('NORMAL', 'SILVER', 'GOLD', 'PLATINUM');
+CREATE TYPE style_preference AS ENUM ('CASUAL', 'BUSINESS', 'ELEGANT', 'SPORTY', 'TRENDY');
 
 -- 租户表
 CREATE TABLE tenants (
@@ -85,6 +87,30 @@ CREATE TABLE replenishment_items (
 CREATE INDEX idx_replenishment_items_plan ON replenishment_items(plan_id);
 CREATE INDEX idx_replenishment_items_sku ON replenishment_items(sku_id);
 
+-- 会员表
+CREATE TABLE members (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    tenant_id UUID NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
+    member_code VARCHAR(50) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    level member_level NOT NULL DEFAULT 'NORMAL',
+    points INTEGER NOT NULL DEFAULT 0,
+    birthday DATE,
+    style_preferences JSONB,
+    total_purchases DECIMAL(10,2) NOT NULL DEFAULT 0,
+    visit_count INTEGER NOT NULL DEFAULT 0,
+    last_visit_at TIMESTAMP,
+    active BOOLEAN NOT NULL DEFAULT true,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    UNIQUE (tenant_id, member_code)
+);
+
+CREATE INDEX idx_members_tenant_phone ON members(tenant_id, phone);
+CREATE INDEX idx_members_tenant_code ON members(tenant_id, member_code);
+CREATE INDEX idx_members_birthday ON members(birthday);
+
 -- 更新 updated_at 触发器
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
@@ -101,4 +127,7 @@ CREATE TRIGGER update_users_updated_at BEFORE UPDATE ON users
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 CREATE TRIGGER update_replenishment_plans_updated_at BEFORE UPDATE ON replenishment_plans
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_members_updated_at BEFORE UPDATE ON members
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
