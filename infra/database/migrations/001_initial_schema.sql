@@ -111,6 +111,29 @@ CREATE INDEX idx_members_tenant_phone ON members(tenant_id, phone);
 CREATE INDEX idx_members_tenant_code ON members(tenant_id, member_code);
 CREATE INDEX idx_members_birthday ON members(birthday);
 
+-- 商品表
+CREATE TABLE products (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    tenant_id UUID NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
+    sku_code VARCHAR(50) NOT NULL,
+    name VARCHAR(200) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    sub_category VARCHAR(50) NOT NULL,
+    style_tags JSONB NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    stock_quantity INTEGER NOT NULL DEFAULT 0,
+    image_urls JSONB,
+    sizes JSONB,
+    active BOOLEAN NOT NULL DEFAULT true,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    UNIQUE (tenant_id, sku_code)
+);
+
+CREATE INDEX idx_products_tenant_sku ON products(tenant_id, sku_code);
+CREATE INDEX idx_products_category ON products(category);
+CREATE INDEX idx_products_style_tags ON products USING GIN (style_tags);
+
 -- 更新 updated_at 触发器
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
