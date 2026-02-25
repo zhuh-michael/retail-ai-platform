@@ -1,0 +1,132 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # 后端 API 测试与构建
+  api:
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: retail_ai_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+      
+      redis:
+        image: redis:7-alpine
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: apps/api/package-lock.json
+      
+      - name: Install dependencies
+        working-directory: ./apps/api
+        run: npm ci
+      
+      - name: Lint
+        working-directory: ./apps/api
+        run: npm run lint
+      
+      - name: Run tests
+        working-directory: ./apps/api
+        run: npm run test:cov
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+          DB_NAME: retail_ai_test
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
+          JWT_SECRET: test-secret
+      
+      - name: Build
+        working-directory: ./apps/api
+        run: npm run build
+      
+      - name: Build Docker image
+        run: |
+          docker build -f infra/docker/api.Dockerfile -t retail-ai-api:${{ github.sha }} .
+      
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./apps/api/coverage/clover.xml
+          flags: api
+
+  # 数据库迁移验证
+  database:
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: retail_ai_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Run database migrations
+        run: |
+          psql -h localhost -U postgres -d retail_ai_test -f infra/database/migrations/001_initial_schema.sql
+        env:
+          PGPASSWORD: postgres
+      
+      - name: Verify schema
+        run: |
+          psql -h localhost -U postgres -d retail_ai_test -c "\dt"
+        env:
+          PGPASSWORD: postgres
+
+  # 部署到开发环境（仅 main 分支）
+  deploy-dev:
+    needs: [api, database]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Deploy to development
+        run: |
+          echo "Deploying to development environment..."
+          # 这里添加实际的部署命令
+          # 例如：kubectl apply -f infra/k8s/dev/
+          # 或者：docker-compose -f docker-compose.prod.yml up -d

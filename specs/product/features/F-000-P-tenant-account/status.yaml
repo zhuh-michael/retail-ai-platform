@@ -1,0 +1,37 @@
+# F-000-P - Feature 状态追踪
+
+feature: F-000-P-多租户与账号管理
+status: in_progress
+current_stage: task-planning-done
+
+# 审批状态
+approvals:
+  requirements: true          # Human 确认 ✓
+  ui_design: true             # Human 确认 ✓
+  architecture: true          # Human 确认 ✓
+  domain_model: self-checked  # AI 自检 ✓
+  api_contract: self-checked  # AI 自检 ✓
+  data_model: self-checked    # AI 自检 ✓
+  tasks: self-checked         # AI 自检 ✓
+
+# 进度追踪
+progress:
+  total_stories: 9
+  completed_stories: 0
+  total_tasks: 0
+  completed_tasks: 0
+
+# 日志
+history:
+  - date: 2026-02-25
+    action: feature_created
+    note: "F-000-P 多租户与账号管理 - Feature 创建"
+  - date: 2026-02-25
+    action: requirements_done
+    note: "需求定义完成（feature-scope.md, stories）"
+  - date: 2026-02-25
+    action: ui_done
+    note: "UI 设计完成（site-map.md）"
+  - date: 2026-02-25
+    action: architecture_done
+    note: "架构设计完成（platform-architecture.md）"
