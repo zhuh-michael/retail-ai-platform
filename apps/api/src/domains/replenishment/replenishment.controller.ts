@@ -7,7 +7,7 @@ import {
   Param,
   Query,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiProperty } from '@nestjs/swagger';
 import { ReplenishmentService } from './replenishment.service';
 import { ReplenishmentPlan, PlanStatus } from './entities/replenishment.entity';
 

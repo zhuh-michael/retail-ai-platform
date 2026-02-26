@@ -8,7 +8,7 @@ import {
   Index,
   JoinColumn,
 } from 'typeorm';
-import { Tenant } from '../tenant/entities/tenant.entity';
+import { Tenant } from '../../tenant/entities/tenant.entity';
 
 export enum MatchOccasion {
   CASUAL = 'CASUAL',

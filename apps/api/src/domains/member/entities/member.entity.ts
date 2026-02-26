@@ -9,7 +9,7 @@ import {
   JoinColumn,
   OneToMany,
 } from 'typeorm';
-import { Tenant } from '../tenant/entities/tenant.entity';
+import { Tenant } from '../../tenant/entities/tenant.entity';
 
 export enum MemberLevel {
   NORMAL = 'NORMAL',
