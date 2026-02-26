@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { View, Text, Button } from '@tarojs/components'
 import './index.css'
 
 const Index = () => {
@@ -10,11 +9,11 @@ const Index = () => {
   }
 
   return (
-    <View className='index'>
-      <Text className='title'>RetailAI Store</Text>
-      <Text className='count'>当前计数：{count}</Text>
-      <Button onClick={add}>点击加 1</Button>
-    </View>
+    <div className='index'>
+      <h1 className='title'>RetailAI Store H5</h1>
+      <p className='count'>当前计数：{count}</p>
+      <button className='button' onClick={add}>点击加 1</button>
+    </div>
   )
 }
 

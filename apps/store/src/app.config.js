@@ -1,4 +1,4 @@
-// Taro H5 mode - this file is required for pre-compilation but not used
+// Taro H5 config - required for build process
 exports.default = {
   pages: ['pages/index/index']
 }

@@ -1,35 +1,12 @@
 {
-  "name": "retail-ai-store",
+  "name": "retail-ai-store-h5",
   "version": "0.1.0",
   "private": true,
-  "description": "RetailAI Copilot - 门店执行端 H5 应用",
-  "templateInfo": {
-    "name": "default",
-    "typescript": true,
-    "css": "sass",
-    "framework": "react"
-  },
+  "description": "RetailAI Copilot - Store H5 Application",
   "scripts": {
-    "build:weapp": "taro build --type weapp",
-    "build:swan": "taro build --type swan",
-    "build:alipay": "taro build --type alipay",
-    "build:tt": "taro build --type tt",
-    "build:h5": "taro build --type h5",
-    "build:rn": "taro build --type rn",
-    "build:qq": "taro build --type qq",
-    "build:jd": "taro build --type jd",
-    "build:harmony": "taro build --type harmony",
-    "build:quickapp": "taro build --type quickapp",
-    "dev:weapp": "taro build --type weapp --watch",
-    "dev:swan": "taro build --type swan --watch",
-    "dev:alipay": "taro build --type alipay --watch",
-    "dev:tt": "taro build --type tt --watch",
-    "dev:h5": "taro build --type h5 --watch",
-    "dev:rn": "taro build --type rn --watch",
-    "dev:qq": "taro build --type qq --watch",
-    "dev:jd": "taro build --type jd --watch",
-    "dev:harmony": "taro build --type harmony --watch",
-    "dev:quickapp": "taro build --type quickapp --watch"
+    "dev": "taro build --type h5 --watch",
+    "build": "taro build --type h5",
+    "serve": "serve dist"
   },
   "browserslist": [
     "last 3 versions",
@@ -37,28 +14,20 @@
     "ios >= 8"
   ],
   "dependencies": {
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.6.2",
     "@tarojs/components": "3.6.0",
     "@tarojs/helper": "3.6.0",
     "@tarojs/plugin-framework-react": "3.6.0",
-    "@tarojs/plugin-platform-alipay": "3.6.0",
     "@tarojs/plugin-platform-h5": "3.6.0",
-    "@tarojs/plugin-platform-jd": "3.6.0",
-    "@tarojs/plugin-platform-qq": "3.6.0",
-    "@tarojs/plugin-platform-swan": "3.6.0",
-    "@tarojs/plugin-platform-tt": "3.6.0",
-    "@tarojs/plugin-platform-weapp": "3.6.0",
     "@tarojs/react": "3.6.0",
     "@tarojs/router": "3.6.0",
     "@tarojs/runtime": "3.6.0",
     "@tarojs/shared": "3.6.0",
     "@tarojs/taro": "3.6.0",
     "@tarojs/taro-h5": "3.6.0",
-    "antd-mobile": "^5.30.0",
-    "axios": "^1.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-refresh": "^0.18.0"
+    "antd-mobile": "^5.30.0",
+    "axios": "^1.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.0",
