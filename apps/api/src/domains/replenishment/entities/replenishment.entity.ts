@@ -26,7 +26,7 @@ export enum ItemStatus {
 }
 
 @Entity('replenishment_plans')
-@Index(['store_id', 'status'])
+@Index(['storeId', 'status'])
 export class ReplenishmentPlan {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -120,8 +120,8 @@ export class ReplenishmentPlan {
 }
 
 @Entity('replenishment_items')
-@Index(['plan_id'])
-@Index(['sku_id'])
+@Index(['planId'])
+@Index(['skuId'])
 export class ReplenishmentItem {
   @PrimaryGeneratedColumn('uuid')
   id: string;
