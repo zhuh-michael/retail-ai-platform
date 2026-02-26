@@ -38,14 +38,14 @@ services:
     networks:
       - retail-ai-network
 
-  # 后端 API
+  # 后端 API (Docker 容器)
   api:
     build:
       context: .
       dockerfile: infra/docker/api.Dockerfile
     container_name: retail-ai-api
     environment:
-      NODE_ENV: development
+      NODE_ENV: production
       DB_HOST: postgres
       DB_PORT: 5432
       DB_USER: postgres
@@ -60,11 +60,9 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-    volumes:
-      - ./apps/api:/app
-      - /app/node_modules
     networks:
       - retail-ai-network
+    restart: unless-stopped
 
   # 管理后台（前端）
   admin:
@@ -90,6 +88,7 @@ services:
       - admin
     networks:
       - retail-ai-network
+    restart: unless-stopped
 
 volumes:
   postgres_data:
