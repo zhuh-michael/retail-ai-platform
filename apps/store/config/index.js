@@ -48,6 +48,10 @@ const config = {
   h5: {
     publicPath: '/',
     staticDirectory: 'static',
+    router: {
+      mode: 'hash',
+      basename: '/'
+    },
     output: {
       filename: 'js/[name].[hash:8].js',
       chunkFilename: 'js/[name].[chunkhash:8].js'
