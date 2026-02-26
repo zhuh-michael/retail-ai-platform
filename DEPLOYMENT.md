@@ -41,9 +41,9 @@ docker run -d --name retail-ai-nginx -p 80:80 -v $(pwd)/infra/docker/nginx.conf:
 
 | 服务 | 地址 | 说明 |
 |------|------|------|
-| **管理后台** | http://localhost | 前端页面 |
-| **API 文档** | http://localhost/api/docs | Swagger UI |
-| **健康检查** | http://localhost/health | 服务状态 |
+| **管理后台** | http://localhost:8080 | 前端页面 |
+| **API 文档** | http://localhost:8080/api/docs | Swagger UI |
+| **健康检查** | http://localhost:8080/health | 服务状态 |
 | **数据库** | localhost:5432 | PostgreSQL |
 | **Redis** | localhost:6379 | Redis 缓存 |
 

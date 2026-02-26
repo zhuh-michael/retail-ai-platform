@@ -62,7 +62,7 @@ echo "🌐 启动 Nginx..."
 docker run -d \
   --name retail-ai-nginx \
   --network retail-ai-network \
-  -p 80:80 \
+  -p 8080:8080 \
   -v $(pwd)/infra/docker/nginx.conf:/etc/nginx/conf.d/default.conf \
   nginx:alpine
 
