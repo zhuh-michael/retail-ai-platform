@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Card, Descriptions, Button, Space, Tag, message, Spin } from 'antd';
 import { ArrowLeftOutlined, EditOutlined } from '@ant-design/icons';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 const TenantDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
